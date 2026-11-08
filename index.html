@@ -1,148 +1,167 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
-تحلیل اوراق سلف موازی سکه - عسکه2
-</title>
+<title>تحلیل ارزندگی اوراق سکه</title>
 
 <style>
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+:root{
+    --bg:#0f172a;
+    --panel:#1e293b;
+    --panel2:#111827;
+    --border:#334155;
+    --gold:#fbbf24;
+    --green:#22c55e;
+    --red:#ef4444;
+    --orange:#f59e0b;
+    --text:#e5e7eb;
 }
 
 body{
-    background:#1e293b;
-    color:#e2e8f0;
-    font-family:tahoma;
-    padding:25px;
-}
-
-.container{
-    max-width:1000px;
-    margin:auto;
-    background:#334155;
-    border-radius:16px;
-    padding:25px;
-}
-
-h1{
-    text-align:center;
-    color:#60a5fa;
-    margin-bottom:25px;
+    font-family:tahoma,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    max-width:1100px;
+    margin:25px auto;
+    padding:20px;
 }
 
 .card{
-    background:#0f172a;
-    border-radius:12px;
-    padding:15px;
-    margin-top:12px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:24px;
+    box-shadow:0 0 30px rgba(0,0,0,.35);
+}
+
+h1{
+    color:var(--gold);
+    text-align:center;
+    margin-bottom:20px;
+}
+
+h2{
+    color:var(--gold);
+    margin-top:0;
 }
 
 .info{
-    border-right:4px solid #3b82f6;
+    background:var(--panel2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+@media(max-width:768px){
+    .grid{
+        grid-template-columns:1fr;
+    }
 }
 
 label{
     display:block;
-    margin-top:15px;
-    margin-bottom:6px;
+    margin-bottom:5px;
+    font-weight:bold;
+    color:#cbd5e1;
 }
 
 input{
     width:100%;
-    padding:12px;
-    border:none;
-    border-radius:8px;
-    background:#475569;
+    box-sizing:border-box;
+    background:#0b1221;
+    border:1px solid #475569;
     color:white;
-}
-
-button{
-    width:100%;
     padding:12px;
-    margin-top:15px;
+    border-radius:10px;
+}
+
+input:focus{
+    outline:none;
+    border-color:var(--gold);
+}
+
+.btn{
+    background:var(--gold);
+    color:#111827;
     border:none;
-    border-radius:8px;
-    background:#2563eb;
-    color:#fff;
+    border-radius:10px;
+    padding:12px 18px;
     cursor:pointer;
+    font-weight:bold;
 }
 
-button:hover{
-    background:#3b82f6;
+.btn:hover{
+    opacity:.9;
 }
 
-.days-box{
+.mainBtn{
+    width:100%;
+    margin-top:25px;
+    font-size:18px;
+}
+
+.result{
+    margin-top:25px;
+    background:var(--panel2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:20px;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    margin:10px 0;
+    padding:8px 0;
+    border-bottom:1px solid #253247;
+}
+
+.value{
+    color:var(--green);
+    font-weight:bold;
+}
+
+.good{
+    color:var(--green);
+    font-size:22px;
+    font-weight:bold;
+}
+
+.neutral{
+    color:var(--orange);
+    font-size:22px;
+    font-weight:bold;
+}
+
+.bad{
+    color:var(--red);
+    font-size:22px;
+    font-weight:bold;
+}
+
+.small{
+    color:#94a3b8;
+    font-size:13px;
+}
+
+.daysWrapper{
     display:flex;
     gap:10px;
 }
 
-.days-box input{
+.daysWrapper input{
     flex:1;
-}
-
-.days-btn{
-    width:120px;
-}
-
-.positive{
-    color:#22c55e;
-    border-right:5px solid #22c55e;
-}
-
-.negative{
-    color:#ef4444;
-    border-right:5px solid #ef4444;
-}
-
-.label-row{
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
-
-.help{
-    position:relative;
-    width:20px;
-    height:20px;
-    border-radius:50%;
-    background:#2563eb;
-    color:white;
-    text-align:center;
-    line-height:20px;
-    cursor:help;
-}
-
-.tip{
-    visibility:hidden;
-    opacity:0;
-    position:absolute;
-    right:28px;
-    top:0;
-    width:300px;
-    background:#0f172a;
-    border:1px solid #3b82f6;
-    border-radius:8px;
-    padding:10px;
-    font-size:12px;
-    transition:.2s;
-    z-index:999;
-}
-
-.help:hover .tip{
-    visibility:visible;
-    opacity:1;
-}
-
-.value{
-    color:#60a5fa;
-    font-weight:bold;
 }
 
 </style>
@@ -150,141 +169,80 @@ button:hover{
 
 <body>
 
-<div class="container">
+<div class="card">
 
-<h1>
-تحلیل اوراق سلف موازی سکه (عسکه2)
-</h1>
+<h1>تحلیل ارزندگی اوراق سکه</h1>
 
-<div class="card info">
+<div class="info">
+
+<p><strong>ارزش تضمینی هر ورقه:</strong> 252,199 تومان</p>
+
+<p><strong>هر ورقه:</strong> معادل یک‌هزارم سکه</p>
+
+<p><strong>سررسید:</strong> 18 آذر 1405</p>
+
+<p><strong>نرخ بدون ریسک پیش‌فرض:</strong> 37٪</p>
+
+</div>
+
+<div class="grid">
 
 <div>
-قیمت بازخرید تضمینی هر سکه:
-<strong>
-252,199,000 تومان
-</strong>
+<label>قیمت بازار ورقه (تومان)</label>
+<input id="bondPrice" type="number" placeholder="مثال: 245000">
 </div>
-
-<br>
 
 <div>
-ارزش تضمینی هر ورقه:
-<strong>
-252,199 تومان
-</strong>
-</div>
-
-<br>
-
-<div>
-هر ورقه معادل:
-<strong>
-یک‌هزارم سکه
-</strong>
-</div>
-
-</div>
-
-<div class="label-row">
 <label>قیمت روز سکه (تومان)</label>
-
-<div class="help">
-؟
-<div class="tip">
-قیمت نقدی روز سکه در بازار.
-در نسخه فعلی صرفاً جهت اطلاع نمایش داده می‌شود.
-</div>
-</div>
+<input id="coinPrice" type="number" placeholder="مثال: 290000000">
 </div>
 
-<input id="goldPrice" type="number">
-
-<div class="label-row">
-<label>قیمت بازار ورقه عسکه2 (تومان)</label>
-
-<div class="help">
-؟
-<div class="tip">
-قیمت فعلی ورقه در بازار.
-مبنای محاسبه YTM و ارزندگی.
-</div>
-</div>
+<div>
+<label>نرخ بهره بدون ریسک (%)</label>
+<input id="riskFreeRate" type="number" value="37">
 </div>
 
-<input id="marketPrice" type="number">
-
-<div class="label-row">
-<label>نرخ بدون ریسک (%)</label>
-
-<div class="help">
-؟
-<div class="tip">
-مثلاً نرخ اخزا یا سپرده بانکی.
-برای محاسبه ارزش فعلی مبلغ تضمینی استفاده می‌شود.
-</div>
-</div>
+<div>
+<label>هزینه اعمال و فروش هر ورقه (تومان)</label>
+<input id="costs" type="number" value="0">
 </div>
 
-<input id="rate" type="number" value="30">
+<div>
+<label>روزهای باقیمانده تا سررسید</label>
 
-<div class="label-row">
-<label>روز تا سررسید</label>
+<div class="daysWrapper">
 
-<div class="help">
-؟
-<div class="tip">
-تعداد روز باقیمانده تا سررسید اوراق.
-</div>
-</div>
-</div>
-
-<div class="days-box">
-
-<input id="days" type="number">
+<input
+id="daysToMaturity"
+type="number"
+value="31"
+>
 
 <button
-type="button"
-class="days-btn"
-onclick="setDays()">
+class="btn"
+onclick="setToday()">
 امروز
 </button>
 
 </div>
 
-<button onclick="calculate()">
-محاسبه تحلیل
+<div class="small">
+بر اساس 17 آبان 1405 تا سررسید 18 آذر 1405
+</div>
+
+</div>
+
+</div>
+
+<button
+class="btn mainBtn"
+onclick="analyze()">
+محاسبه ارزندگی
 </button>
 
-<div class="card">
-ارزش فعلی مبلغ تضمینی:
-<span class="value" id="pvGuarantee"></span>
-</div>
+<div id="result" class="result">
 
-<div class="card">
-اختلاف ریالی:
-<span class="value" id="diffAmount"></span>
-</div>
-
-<div class="card">
-اختلاف درصدی:
-<span class="value" id="diffPercent"></span>
-</div>
-
-<div class="card">
-بازده تا سررسید:
-<span class="value" id="holdingYield"></span>
-</div>
-
-<div class="card">
-بازده سالانه‌شده (YTM):
-<span class="value" id="annualYield"></span>
-</div>
-
-<div
-id="strategy"
-class="card">
-
-هنوز محاسبه‌ای انجام نشده است.
+برای مشاهده تحلیل، اطلاعات را وارد کنید.
 
 </div>
 
@@ -292,182 +250,323 @@ class="card">
 
 <script>
 
-const GUARANTEE_COIN =
-252199000;
+const GUARANTEED_VALUE = 252199;
 
-const GUARANTEE_CONTRACT =
-GUARANTEE_COIN / 1000;
-
-function formatNumber(v){
-
-    return Math.round(v)
-    .toLocaleString("fa-IR");
-}
-
-function setDays(){
-
-    const today =
-    new Date();
-
-    const target =
-    new Date(
-        2026,
-        11,
-        9
-    );
-
-    const diff =
-    Math.ceil(
-        (target - today)
-        / 86400000
-    );
+function setToday(){
 
     document.getElementById(
-        "days"
-    ).value =
-    diff > 0 ? diff : 0;
+        "daysToMaturity"
+    ).value = 31;
+
 }
 
-function calculate(){
+function formatNumber(value){
 
-    const marketPrice =
-    parseFloat(
-        document
-        .getElementById(
-            "marketPrice"
-        ).value
-    );
+    return Math.round(value)
+    .toLocaleString("fa-IR");
 
-    const rate =
-    parseFloat(
-        document
-        .getElementById(
-            "rate"
-        ).value
-    ) / 100;
+}
 
-    const days =
-    parseFloat(
-        document
-        .getElementById(
-            "days"
-        ).value
-    );
+function annualizedYTM(
+    futureValue,
+    price,
+    days
+){
 
     if(
-        isNaN(marketPrice) ||
-        isNaN(rate) ||
-        isNaN(days)
+        price <= 0 ||
+        futureValue <= 0 ||
+        days <= 0
     ){
-        alert(
-          "تمام مقادیر را وارد کنید"
+        return 0;
+    }
+
+    return (
+        Math.pow(
+            futureValue / price,
+            365 / days
+        ) - 1
+    ) * 100;
+}
+
+function analyze(){
+
+    const bondPrice =
+        Number(
+            document.getElementById(
+                "bondPrice"
+            ).value
         );
+
+    const coinPrice =
+        Number(
+            document.getElementById(
+                "coinPrice"
+            ).value
+        );
+
+    const riskFreeRate =
+        Number(
+            document.getElementById(
+                "riskFreeRate"
+            ).value
+        );
+
+    const costs =
+        Number(
+            document.getElementById(
+                "costs"
+            ).value
+        );
+
+    const days =
+        Number(
+            document.getElementById(
+                "daysToMaturity"
+            ).value
+        );
+
+    if(
+        bondPrice <= 0 ||
+        coinPrice <= 0 ||
+        days <= 0
+    ){
+        document.getElementById(
+            "result"
+        ).innerHTML =
+        "لطفاً همه مقادیر را وارد کنید.";
         return;
     }
 
-    const pvGuarantee =
-    GUARANTEE_CONTRACT /
-    Math.pow(
-        1 + rate,
-        days/365
-    );
+    const guaranteedValue =
+        GUARANTEED_VALUE;
 
-    const diff =
-    pvGuarantee -
-    marketPrice;
+    const exerciseValue =
+        (coinPrice / 1000)
+        - costs;
 
-    const diffPercent =
-    (
-        diff /
-        pvGuarantee
-    ) * 100;
+    const fairValue =
+        Math.max(
+            guaranteedValue,
+            exerciseValue
+        );
 
-    const holdingYield =
-    (
-        GUARANTEE_CONTRACT /
-        marketPrice - 1
-    ) * 100;
+    const margin =
+        fairValue - bondPrice;
 
-    const annualYield =
-    (
-        Math.pow(
-            GUARANTEE_CONTRACT /
-            marketPrice,
-            365/days
-        ) - 1
-    ) * 100;
+    const upsidePercent =
+        (margin / bondPrice)
+        * 100;
 
-    document.getElementById(
-        "pvGuarantee"
-    ).innerHTML =
-    formatNumber(
-        pvGuarantee
-    ) + " تومان";
+    const guaranteedYTM =
+        annualizedYTM(
+            guaranteedValue,
+            bondPrice,
+            days
+        );
 
-    document.getElementById(
-        "diffAmount"
-    ).innerHTML =
-    formatNumber(
-        Math.abs(diff)
-    ) + " تومان";
+    const exerciseYTM =
+        annualizedYTM(
+            exerciseValue,
+            bondPrice,
+            days
+        );
 
-    document.getElementById(
-        "diffPercent"
-    ).innerHTML =
-    Math.abs(
-        diffPercent
-    ).toFixed(2)
-    + "%";
+    const selectedYTM =
+        annualizedYTM(
+            fairValue,
+            bondPrice,
+            days
+        );
 
-    document.getElementById(
-        "holdingYield"
-    ).innerHTML =
-    holdingYield.toFixed(2)
-    + "%";
+    const spreadGuarantee =
+        guaranteedYTM -
+        riskFreeRate;
 
-    document.getElementById(
-        "annualYield"
-    ).innerHTML =
-    annualYield.toFixed(2)
-    + "%";
+    const spreadExercise =
+        exerciseYTM -
+        riskFreeRate;
 
-    const strategy =
-    document.getElementById(
-        "strategy"
-    );
+    let source;
 
     if(
-        marketPrice <
-        pvGuarantee
+        exerciseValue >
+        guaranteedValue
     ){
 
-        strategy.className =
-        "card positive";
+        source =
+        "اعمال اوراق و دریافت سکه";
 
-        strategy.innerHTML =
-        `
-✅ ارزش بازار ورقه کمتر از ارزش منصفانه است.<br><br>
+    }
+    else if(
+        exerciseValue <
+        guaranteedValue
+    ){
 
-✅ بازده این اوراق از سرمایه‌گذاری بدون ریسک بیشتر است.<br><br>
+        source =
+        "بازخرید تضمینی";
 
-✅ نگهداری تا سررسید می‌تواند گزینه مناسبی باشد.
-        `;
     }
     else{
 
-        strategy.className =
-        "card negative";
+        source =
+        "هر دو برابر";
 
-        strategy.innerHTML =
-        `
-❌ ارزش بازار ورقه بالاتر از ارزش منصفانه است.<br><br>
-
-❌ بازده آن از نرخ بدون ریسک کمتر است.<br><br>
-
-❌ سرمایه‌گذاری بدون ریسک می‌تواند گزینه بهتری باشد.
-        `;
     }
 
+    let cls =
+        "neutral";
+
+    let status =
+        "منصفانه";
+
+    if(
+        upsidePercent >= 10
+    ){
+
+        cls = "good";
+        status =
+        "بسیار ارزنده";
+
+    }
+    else if(
+        upsidePercent >= 3
+    ){
+
+        cls = "good";
+        status =
+        "ارزنده";
+
+    }
+    else if(
+        upsidePercent <= -3
+    ){
+
+        cls = "bad";
+        status =
+        "گران";
+
+    }
+
+    document.getElementById(
+        "result"
+    ).innerHTML = `
+
+        <h2>نتایج تحلیل</h2>
+
+        <div class="row">
+        <span>ارزش تضمینی ورقه</span>
+        <span class="value">
+        ${formatNumber(
+            guaranteedValue
+        )} تومان
+        </span>
+        </div>
+
+        <div class="row">
+        <span>ارزش اعمال ورقه</span>
+        <span class="value">
+        ${formatNumber(
+            exerciseValue
+        )} تومان
+        </span>
+        </div>
+
+        <div class="row">
+        <span>مبنای ارزش‌گذاری</span>
+        <span>
+        ${source}
+        </span>
+        </div>
+
+        <div class="row">
+        <span>ارزش منصفانه</span>
+        <span class="value">
+        ${formatNumber(
+            fairValue
+        )} تومان
+        </span>
+        </div>
+
+        <div class="row">
+        <span>اختلاف ریالی</span>
+        <span>
+        ${formatNumber(
+            margin
+        )} تومان
+        </span>
+        </div>
+
+        <div class="row">
+        <span>درصد ارزندگی</span>
+        <span>
+        ${upsidePercent.toFixed(2)}%
+        </span>
+        </div>
+
+        <hr>
+
+        <div class="row">
+        <span>
+        YTM سناریوی تضمینی
+        </span>
+        <span>
+        ${guaranteedYTM.toFixed(2)}%
+        </span>
+        </div>
+
+        <div class="row">
+        <span>
+        اسپرد نسبت به نرخ بدون ریسک
+        </span>
+        <span>
+        ${spreadGuarantee.toFixed(2)}%
+        </span>
+        </div>
+
+        <div class="row">
+        <span>
+        YTM سناریوی اعمال
+        </span>
+        <span>
+        ${exerciseYTM.toFixed(2)}%
+        </span>
+        </div>
+
+        <div class="row">
+        <span>
+        اسپرد نسبت به نرخ بدون ریسک
+        </span>
+        <span>
+        ${spreadExercise.toFixed(2)}%
+        </span>
+        </div>
+
+        <div class="row">
+        <span>
+        YTM سناریوی منتخب
+        </span>
+        <span class="value">
+        ${selectedYTM.toFixed(2)}%
+        </span>
+        </div>
+
+        <div class="row">
+        <span>
+        روز تا سررسید
+        </span>
+        <span>
+        ${days}
+        </span>
+        </div>
+
+        <br>
+
+        <div class="${cls}">
+        نتیجه نهایی: ${status}
+        </div>
+
+    `;
 }
 
 </script>
