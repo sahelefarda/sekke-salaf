@@ -1,333 +1,293 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>تحلیل ارزندگی اوراق سکه</title>
-
 <style>
-
-:root{
-    --bg:#0f172a;
-    --panel:#1e293b;
-    --panel2:#111827;
-    --border:#334155;
-    --gold:#fbbf24;
-    --green:#22c55e;
-    --red:#ef4444;
-    --orange:#f59e0b;
-    --text:#e5e7eb;
+:root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --panel2: #111827;
+    --border: #334155;
+    --gold: #fbbf24;
+    --green: #22c55e;
+    --red: #ef4444;
+    --orange: #f59e0b;
+    --text: #e5e7eb;
 }
 
-body{
-    font-family:tahoma,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    max-width:1100px;
-    margin:25px auto;
-    padding:20px;
+body {
+    font-family: tahoma, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    max-width: 1100px;
+    margin: 25px auto;
+    padding: 20px;
 }
 
-.card{
-    background:var(--panel);
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:24px;
-    box-shadow:0 0 30px rgba(0,0,0,.35);
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 0 30px rgba(0,0,0,.35);
 }
 
-h1{
-    color:var(--gold);
-    text-align:center;
-    margin-bottom:20px;
+h1 {
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-h2{
-    color:var(--gold);
-    margin-top:0;
+h2 {
+    color: var(--gold);
+    margin-top: 0;
 }
 
-.info{
-    background:var(--panel2);
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:15px;
-    margin-bottom:20px;
+.info {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
+.info p {
+    margin: 6px 0;
 }
 
-@media(max-width:768px){
-    .grid{
-        grid-template-columns:1fr;
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+@media(max-width:768px) {
+    .grid, .summary-grid {
+        grid-template-columns: 1fr !important;
     }
 }
 
-label{
-    display:block;
-    margin-bottom:5px;
-    font-weight:bold;
-    color:#cbd5e1;
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #cbd5e1;
 }
 
-input{
-    width:100%;
-    box-sizing:border-box;
-    background:#0b1221;
-    border:1px solid #475569;
-    color:white;
-    padding:12px;
-    border-radius:10px;
+input {
+    width: 100%;
+    box-sizing: border-box;
+    background: #0b1221;
+    border: 1px solid #475569;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 15px;
+    direction: ltr;
+    text-align: right;
 }
 
-input:focus{
-    outline:none;
-    border-color:var(--gold);
+input:focus {
+    outline: none;
+    border-color: var(--gold);
 }
 
-.btn{
-    background:var(--gold);
-    color:#111827;
-    border:none;
-    border-radius:10px;
-    padding:12px 18px;
-    cursor:pointer;
-    font-weight:bold;
+.btn {
+    background: var(--gold);
+    color: #111827;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.2s, transform 0.1s;
 }
 
-.btn:hover{
-    opacity:.9;
+.btn:hover {
+    opacity: .9;
 }
 
-.mainBtn{
-    width:100%;
-    margin-top:25px;
-    font-size:18px;
+.btn:active {
+    transform: scale(0.99);
 }
 
-.result{
-    margin-top:25px;
-    background:var(--panel2);
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:20px;
+.mainBtn {
+    width: 100%;
+    margin-top: 25px;
+    font-size: 18px;
 }
 
-.row{
-    display:flex;
-    justify-content:space-between;
-    margin:10px 0;
-    padding:8px 0;
-    border-bottom:1px solid #253247;
+.result {
+    margin-top: 25px;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
 }
 
-.value{
-    color:var(--green);
-    font-weight:bold;
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+    border-bottom: 1px solid #253247;
 }
 
-.good{
-    color:var(--green);
-    font-size:22px;
-    font-weight:bold;
+.value {
+    color: var(--green);
+    font-weight: bold;
 }
 
-.neutral{
-    color:var(--orange);
-    font-size:22px;
-    font-weight:bold;
+.negative-val {
+    color: var(--red);
+    font-weight: bold;
 }
 
-.bad{
-    color:var(--red);
-    font-size:22px;
-    font-weight:bold;
+.good {
+    color: var(--green);
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: center;
 }
 
-.small{
-    color:#94a3b8;
-    font-size:13px;
+.neutral {
+    color: var(--orange);
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: center;
 }
 
-.daysWrapper{
-    display:flex;
-    gap:10px;
+.bad {
+    color: var(--red);
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: center;
 }
 
-.daysWrapper input{
-    flex:1;
-}
-.winner-box{
-    margin-top:25px;
-    padding:18px;
-    border-radius:16px;
-
-    background:rgba(34,197,94,.12);
-    border:2px solid #22c55e;
-
-    display:flex;
-    align-items:center;
-    gap:15px;
-
-    box-shadow:
-        0 0 15px rgba(34,197,94,.30),
-        0 0 30px rgba(34,197,94,.15);
-
-    animation:winnerGlow 2s infinite;
+.small {
+    color: #94a3b8;
+    font-size: 13px;
+    margin-top: 5px;
 }
 
-.winner-icon{
-
-    width:64px;
-    height:64px;
-
-    border-radius:50%;
-
-    background:#22c55e;
-    color:white;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:36px;
-    font-weight:bold;
-
-    animation:tickPop .6s ease-out;
+.daysWrapper {
+    display: flex;
+    gap: 10px;
 }
 
-.winner-title{
-    color:#22c55e;
-    font-size:22px;
-    font-weight:bold;
+.daysWrapper input {
+    flex: 1;
 }
 
-.winner-subtitle{
-    color:#d1fae5;
-    margin-top:4px;
+.winner-box {
+    margin-top: 25px;
+    padding: 18px;
+    border-radius: 16px;
+    background: rgba(34,197,94,.12);
+    border: 2px solid #22c55e;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 0 15px rgba(34,197,94,.30), 0 0 30px rgba(34,197,94,.15);
+    animation: winnerGlow 2s infinite;
 }
 
-.winner-badge{
-    background:#22c55e;
-    color:#08120d;
-    padding:4px 10px;
-    border-radius:20px;
-    font-size:12px;
-    font-weight:bold;
-    display:inline-block;
-    margin-right:8px;
-}
-.winning-row{
-
-    background:rgba(34,197,94,.10);
-
-    border:1px solid rgba(
-        34,
-        197,
-        94,
-        .35
-    );
-
-    border-radius:10px;
-
-    padding-right:10px;
-
-    box-shadow:
-        0 0 10px rgba(
-            34,
-            197,
-            94,
-            .15
-        );
-
-}
-.summary-card{
-
-    margin-bottom:20px;
-
-    border-radius:16px;
-
-    padding:18px;
-
-    background:linear-gradient(
-        135deg,
-        rgba(251,191,36,.15),
-        rgba(34,197,94,.12)
-    );
-
-    border:1px solid rgba(
-        251,
-        191,
-        36,
-        .35
-    );
-
+.winner-icon {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #22c55e;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+    animation: tickPop .6s ease-out;
 }
 
-.summary-title{
-
-    color:#fbbf24;
-
-    font-size:24px;
-
-    font-weight:bold;
-
-    margin-bottom:10px;
-
+.winner-title {
+    color: #22c55e;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-.summary-grid{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(2,1fr);
-
-    gap:12px;
-
-}    
-@keyframes tickPop{
-
-    0%{
-        transform:scale(.2) rotate(-20deg);
-        opacity:0;
-    }
-
-    70%{
-        transform:scale(1.15);
-    }
-
-    100%{
-        transform:scale(1);
-        opacity:1;
-    }
+.winner-subtitle {
+    color: #d1fae5;
+    margin-top: 6px;
 }
 
-@keyframes winnerGlow{
+.winner-badge {
+    background: #22c55e;
+    color: #08120d;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 8px;
+}
 
-    0%{
-        box-shadow:
-        0 0 15px rgba(34,197,94,.20),
-        0 0 30px rgba(34,197,94,.10);
-    }
+.winning-row {
+    background: rgba(34,197,94,.10);
+    border: 1px solid rgba(34,197,94,.35);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(34,197,94,.15);
+}
 
-    50%{
-        box-shadow:
-        0 0 30px rgba(34,197,94,.60),
-        0 0 60px rgba(34,197,94,.25);
-    }
+.summary-card {
+    margin-bottom: 20px;
+    border-radius: 16px;
+    padding: 18px;
+    background: linear-gradient(135deg, rgba(251,191,36,.15), rgba(34,197,94,.12));
+    border: 1px solid rgba(251,191,36,.35);
+}
 
-    100%{
-        box-shadow:
-        0 0 15px rgba(34,197,94,.20),
-        0 0 30px rgba(34,197,94,.10);
-    }
+.summary-title {
+    color: #fbbf24;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.summary-item {
+    background: rgba(15, 23, 42, 0.6);
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 18px 0;
+}
+
+@keyframes tickPop {
+    0% { transform: scale(.2) rotate(-20deg); opacity: 0; }
+    70% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes winnerGlow {
+    0%, 100% { box-shadow: 0 0 15px rgba(34,197,94,.20), 0 0 30px rgba(34,197,94,.10); }
+    50% { box-shadow: 0 0 30px rgba(34,197,94,.60), 0 0 60px rgba(34,197,94,.25); }
 }
 </style>
 </head>
@@ -336,490 +296,322 @@ input:focus{
 
 <div class="card">
 
-<h1>تحلیل ارزندگی اوراق سکه</h1>
+    <h1>تحلیل ارزندگی اوراق سکه</h1>
 
-<div class="info">
+    <div class="info">
+        <p><strong>ارزش تضمینی هر ورقه:</strong> ۲۵۲,۱۹۹ تومان</p>
+        <p><strong>هر ورقه:</strong> معادل یک‌هزارم سکه</p>
+        <p><strong>سررسید:</strong> ۱۸ آذر ۱۴۰۵</p>
+        <p><strong>نرخ بدون ریسک پیش‌فرض:</strong> ۳۷٪</p>
+    </div>
 
-<p><strong>ارزش تضمینی هر ورقه:</strong> 252,199 تومان</p>
+    <div class="grid">
+        <div>
+            <label for="bondPrice">قیمت بازار ورقه (تومان)</label>
+            <input id="bondPrice" type="text" inputmode="numeric" value="245,000" placeholder="مثال: 245,000">
+        </div>
 
-<p><strong>هر ورقه:</strong> معادل یک‌هزارم سکه</p>
+        <div>
+            <label for="coinPrice">قیمت روز سکه (تومان)</label>
+            <input id="coinPrice" type="text" inputmode="numeric" value="290,000,000" placeholder="مثال: 290,000,000">
+        </div>
 
-<p><strong>سررسید:</strong> 18 آذر 1405</p>
+        <div>
+            <label for="riskFreeRate">نرخ بهره بدون ریسک سالانه (%)</label>
+            <input id="riskFreeRate" type="text" inputmode="decimal" value="37">
+        </div>
 
-<p><strong>نرخ بدون ریسک پیش‌فرض:</strong> 37٪</p>
+        <div>
+            <label for="costs">هزینه اعمال و فروش هر ورقه (تومان)</label>
+            <input id="costs" type="text" inputmode="numeric" value="0">
+        </div>
 
-</div>
+        <div>
+            <label for="daysToMaturity">روزهای باقیمانده تا سررسید</label>
+            <div class="daysWrapper">
+                <input id="daysToMaturity" type="text" inputmode="numeric" value="31">
+                <button id="todayBtn" class="btn" type="button">امروز</button>
+            </div>
+            <div class="small">سررسید نهایی: ۱۸ آذر ۱۴۰۵ (۹ دسامبر ۲۰۲۶)</div>
+        </div>
+    </div>
 
-<div class="grid">
+    <button id="calcBtn" class="btn mainBtn" type="button">محاسبه ارزندگی</button>
 
-<div>
-<label>قیمت بازار ورقه (تومان)</label>
-<input id="bondPrice" type="number" placeholder="مثال: 245000">
-</div>
-
-<div>
-<label>قیمت روز سکه (تومان)</label>
-<input id="coinPrice" type="number" placeholder="مثال: 290000000">
-</div>
-
-<div>
-<label>نرخ بهره بدون ریسک (%)</label>
-<input id="riskFreeRate" type="number" value="37">
-</div>
-
-<div>
-<label>هزینه اعمال و فروش هر ورقه (تومان)</label>
-<input id="costs" type="number" value="0">
-</div>
-
-<div>
-<label>روزهای باقیمانده تا سررسید</label>
-
-<div class="daysWrapper">
-
-<input
-id="daysToMaturity"
-type="number"
-value="31"
->
-
-<button
-class="btn"
-onclick="setToday()">
-امروز
-</button>
-
-</div>
-
-<div class="small">
-بر اساس 17 آبان 1405 تا سررسید 18 آذر 1405
-</div>
-
-</div>
-
-</div>
-
-<button
-class="btn mainBtn"
-onclick="analyze()">
-محاسبه ارزندگی
-</button>
-
-<div id="result" class="result">
-
-برای مشاهده تحلیل، اطلاعات را وارد کنید.
-
-</div>
+    <div id="result" class="result">
+        برای مشاهده تحلیل، اطلاعات را وارد کرده و دکمه محاسبه را بزنید.
+    </div>
 
 </div>
 
 <script>
+(function() {
+    const GUARANTEED_VALUE = 252199;
+    const MATURITY_DATE = new Date("2026-12-09T00:00:00");
 
-const GUARANTEED_VALUE = 252199;
-
-function setToday(){
-
-    document.getElementById(
-        "daysToMaturity"
-    ).value = 31;
-
-}
-
-function formatNumber(value){
-
-    return Math.round(value)
-    .toLocaleString("fa-IR");
-
-}
-
-function annualizedYTM(
-    futureValue,
-    price,
-    days
-){
-
-    if(
-        price <= 0 ||
-        futureValue <= 0 ||
-        days <= 0
-    ){
-        return 0;
+    // تبدیل اعداد فارسی و عربی به انگلیسی و حذف ویرگول‌ها
+    function parseCleanNumber(str) {
+        if (str === null || str === undefined) return NaN;
+        let s = String(str);
+        const persianDigits = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
+        const arabicDigits  = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+        for (let i = 0; i < 10; i++) {
+            s = s.replace(persianDigits[i], i).replace(arabicDigits[i], i);
+        }
+        // تبدیل ممیز فارسی به نقطه و حذف جداکننده‌های هزارگان
+        s = s.replace(/٫/g, '.').replace(/[,،\s]/g, '');
+        return s === '' ? NaN : Number(s);
     }
 
-    return (
-        Math.pow(
-            futureValue / price,
-            365 / days
-        ) - 1
-    ) * 100;
-}
-
-function analyze(){
-
-    const bondPrice =
-        Number(
-            document.getElementById(
-                "bondPrice"
-            ).value
-        );
-
-    const coinPrice =
-        Number(
-            document.getElementById(
-                "coinPrice"
-            ).value
-        );
-
-    const riskFreeRate =
-        Number(
-            document.getElementById(
-                "riskFreeRate"
-            ).value
-        );
-
-    const costs =
-        Number(
-            document.getElementById(
-                "costs"
-            ).value
-        );
-
-    const days =
-        Number(
-            document.getElementById(
-                "daysToMaturity"
-            ).value
-        );
-
-    if(
-        bondPrice <= 0 ||
-        coinPrice <= 0 ||
-        days <= 0
-    ){
-        document.getElementById(
-            "result"
-        ).innerHTML =
-        "لطفاً همه مقادیر را وارد کنید.";
-        return;
+    function setToday() {
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+        const diffTime = MATURITY_DATE - now;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        document.getElementById("daysToMaturity").value = Math.max(1, diffDays);
     }
 
-    const guaranteedValue =
-        GUARANTEED_VALUE;
-
-    const exerciseValue =
-        (coinPrice / 1000)
-        - costs;
-
-    const fairValue =
-        Math.max(
-            guaranteedValue,
-            exerciseValue
-        );
-
-    const margin =
-        fairValue - bondPrice;
-
-    const upsidePercent =
-        (margin / bondPrice)
-        * 100;
-
-    const guaranteedYTM =
-        annualizedYTM(
-            guaranteedValue,
-            bondPrice,
-            days
-        );
-
-    const exerciseYTM =
-        annualizedYTM(
-            exerciseValue,
-            bondPrice,
-            days
-        );
-
-    const selectedYTM =
-        annualizedYTM(
-            fairValue,
-            bondPrice,
-            days
-        );
-
-    const spreadGuarantee =
-        guaranteedYTM -
-        riskFreeRate;
-
-    const spreadExercise =
-        exerciseYTM -
-        riskFreeRate;
-    const winnerLabel =
-    exerciseValue > guaranteedValue
-    ?
-    "اعمال اوراق و دریافت سکه"
-    :
-    exerciseValue < guaranteedValue
-    ?
-    "بازخرید تضمینی"
-    :
-    "هر دو برابر";
-
-const winnerBadge =
-    exerciseValue > guaranteedValue
-    ?
-    "سناریوی اعمال"
-    :
-    exerciseValue < guaranteedValue
-    ?
-    "سناریوی تضمینی"
-    :
-    "سناریوهای برابر";
-const guaranteeWinner =
-    guaranteedValue > exerciseValue;
-
-const exerciseWinner =
-    exerciseValue > guaranteedValue;
-
-const equalScenario =
-    guaranteedValue === exerciseValue;
-    let source;
-
-    if(
-        exerciseValue >
-        guaranteedValue
-    ){
-
-        source =
-        "اعمال اوراق و دریافت سکه";
-
-    }
-    else if(
-        exerciseValue <
-        guaranteedValue
-    ){
-
-        source =
-        "بازخرید تضمینی";
-
-    }
-    else{
-
-        source =
-        "هر دو برابر";
-
+    function formatNumber(value) {
+        const rounded = Math.round(value);
+        const absFormatted = Math.abs(rounded).toLocaleString("fa-IR");
+        return rounded < 0 ? absFormatted + "-" : absFormatted;
     }
 
-    let cls =
-        "neutral";
-
-    let status =
-        "منصفانه";
-
-    if(
-        upsidePercent >= 10
-    ){
-
-        cls = "good";
-        status =
-        "بسیار ارزنده";
-
-    }
-    else if(
-        upsidePercent >= 3
-    ){
-
-        cls = "good";
-        status =
-        "ارزنده";
-
-    }
-    else if(
-        upsidePercent <= -3
-    ){
-
-        cls = "bad";
-        status =
-        "گران";
-
+    function formatPercent(value) {
+        const fixed = Math.abs(value).toFixed(2);
+        return value < 0 ? fixed + "%-" : fixed + "%";
     }
 
-    document.getElementById(
-        "result"
-    ).innerHTML = `
-
-        <h2>نتایج تحلیل</h2>
-
-<div class="row ${guaranteeWinner ? 'winning-row' : ''}">
-<span>
-
-    ارزش تضمینی ورقه
-
-    ${
-        guaranteeWinner
-        ?
-        '<span class="winner-badge">برنده</span>'
-        :
-        ''
+    function annualizedYTM(futureValue, price, days) {
+        if (price <= 0 || days <= 0) return 0;
+        if (futureValue <= 0) return -100;
+        return (Math.pow(futureValue / price, 365 / days) - 1) * 100;
     }
 
-</span>
-
-<span class="value">
-
-${formatNumber(
-    guaranteedValue
-)} تومان
-
-</span>
-
-</div>        
-
-<div class="row ${exerciseWinner ? 'winning-row' : ''}">
-<span>
-
-    ارزش اعمال ورقه
-
-    ${
-        exerciseWinner
-        ?
-        '<span class="winner-badge">برنده</span>'
-        :
-        ''
+    function presentValue(futureValue, annualRatePercent, days) {
+        const r = annualRatePercent / 100;
+        if (r <= -1 || days <= 0) return futureValue;
+        return futureValue / Math.pow(1 + r, days / 365);
     }
 
-</span>
+    function analyze() {
+        const bondPrice = parseCleanNumber(document.getElementById("bondPrice").value);
+        const coinPrice = parseCleanNumber(document.getElementById("coinPrice").value);
+        const riskFreeRate = parseCleanNumber(document.getElementById("riskFreeRate").value) || 0;
+        const costs = parseCleanNumber(document.getElementById("costs").value) || 0;
+        const days = parseCleanNumber(document.getElementById("daysToMaturity").value);
 
-<span class="value">
+        const resultBox = document.getElementById("result");
 
-${formatNumber(
-    exerciseValue
-)} تومان
+        if (isNaN(bondPrice) || bondPrice <= 0) {
+            resultBox.innerHTML = '<span class="negative-val">لطفاً «قیمت بازار ورقه» را بزرگ‌تر از صفر وارد کنید.</span>';
+            return;
+        }
+        if (isNaN(coinPrice) || coinPrice <= 0) {
+            resultBox.innerHTML = '<span class="negative-val">لطفاً «قیمت روز سکه» را بزرگ‌تر از صفر وارد کنید.</span>';
+            return;
+        }
+        if (isNaN(days) || days <= 0) {
+            resultBox.innerHTML = '<span class="negative-val">لطفاً «روزهای باقیمانده تا سررسید» را بزرگ‌تر از صفر وارد کنید.</span>';
+            return;
+        }
 
-</span>
+        const guaranteedValue = GUARANTEED_VALUE;
+        const exerciseValue = Math.max(0, (coinPrice / 1000) - costs);
 
-</div>
+        // ارزش در سررسید (بیشینه بین تضمینی و اعمال)
+        const terminalPayoff = Math.max(guaranteedValue, exerciseValue);
 
-        <div class="row">
-        <span>مبنای ارزش‌گذاری</span>
-        <span>
-        ${source}
-        </span>
-        </div>
+        // ارزش فعلی منصفانه با تنزیل بر اساس نرخ بدون ریسک
+        const discountedFairValue = presentValue(terminalPayoff, riskFreeRate, days);
 
-        <div class="row">
-        <span>ارزش منصفانه</span>
-        <span class="value">
-        ${formatNumber(
-            fairValue
-        )} تومان
-        </span>
-        </div>
+        // سود ناخالص در سررسید و بازده دوره نگهداری
+        const nominalMargin = terminalPayoff - bondPrice;
+        const holdingReturnPercent = (nominalMargin / bondPrice) * 100;
 
-        <div class="row">
-        <span>اختلاف ریالی</span>
-        <span>
-        ${formatNumber(
-            margin
-        )} تومان
-        </span>
-        </div>
+        // اختلاف قیمت بازار با ارزش ذاتی امروز (تنزیل‌شده)
+        const pvMargin = discountedFairValue - bondPrice;
+        const pvUpsidePercent = (pvMargin / bondPrice) * 100;
 
-        <div class="row">
-        <span>درصد ارزندگی</span>
-        <span>
-        ${upsidePercent.toFixed(2)}%
-        </span>
-        </div>
+        // محاسبه بازده سالانه (YTM)
+        const guaranteedYTM = annualizedYTM(guaranteedValue, bondPrice, days);
+        const exerciseYTM = annualizedYTM(exerciseValue, bondPrice, days);
+        const selectedYTM = annualizedYTM(terminalPayoff, bondPrice, days);
 
-        <hr>
+        const spreadGuarantee = guaranteedYTM - riskFreeRate;
+        const spreadExercise = exerciseYTM - riskFreeRate;
+        const spreadSelected = selectedYTM - riskFreeRate;
 
-        <div class="row">
-        <span>
-        YTM سناریوی تضمینی
-        </span>
-        <span>
-        ${guaranteedYTM.toFixed(2)}%
-        </span>
-        </div>
+        const guaranteeWinner = guaranteedValue > exerciseValue;
+        const exerciseWinner = exerciseValue > guaranteedValue;
 
-        <div class="row">
-        <span>
-        اسپرد نسبت به نرخ بدون ریسک
-        </span>
-        <span>
-        ${spreadGuarantee.toFixed(2)}%
-        </span>
-        </div>
+        let winnerLabel = "هر دو سناریو بازدهی یکسانی دارند";
+        let winnerBadge = "سناریوهای برابر";
 
-        <div class="row">
-        <span>
-        YTM سناریوی اعمال
-        </span>
-        <span>
-        ${exerciseYTM.toFixed(2)}%
-        </span>
-        </div>
+        if (exerciseWinner) {
+            winnerLabel = "اعمال اوراق و دریافت سکه (ارزش ذاتی سکه بالاتر از کف تضمینی است)";
+            winnerBadge = "سناریوی اعمال";
+        } else if (guaranteeWinner) {
+            winnerLabel = "بازخرید تضمینی نقدی (کف تضمینی بالاتر از ارزش روز سکه است)";
+            winnerBadge = "سناریوی تضمینی";
+        }
 
-        <div class="row">
-        <span>
-        اسپرد نسبت به نرخ بدون ریسک
-        </span>
-        <span>
-        ${spreadExercise.toFixed(2)}%
-        </span>
-        </div>
+        let cls = "neutral";
+        let status = "منصفانه (نزدیک به نرخ بدون ریسک)";
 
-        <div class="row">
-        <span>
-        YTM سناریوی منتخب
-        </span>
-        <span class="value">
-        ${selectedYTM.toFixed(2)}%
-        </span>
-        </div>
+        if (spreadSelected >= 8) {
+            cls = "good";
+            status = "بسیار ارزنده (بازدهی بسیار بالاتر از نرخ بدون ریسک)";
+        } else if (spreadSelected >= 2) {
+            cls = "good";
+            status = "ارزنده (دارای صرف ریسک مثبت)";
+        } else if (spreadSelected <= -2) {
+            cls = "bad";
+            status = "گران (بازدهی کمتر از نرخ بهره بدون ریسک)";
+        }
 
-        <div class="row">
-        <span>
-        روز تا سررسید
-        </span>
-        <span>
-        ${days}
-        </span>
-        </div>
+        resultBox.innerHTML = `
+            <div class="summary-card">
+                <div class="summary-title">خلاصه مدیریتی</div>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="small">ارزش فعلی منصفانه (تنزیل‌شده امروز)</div>
+                        <div class="value" style="font-size:18px; margin-top:4px;">${formatNumber(discountedFairValue)} تومان</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="small">بازده تا سررسید سالانه (YTM منتخب)</div>
+                        <div class="${selectedYTM >= riskFreeRate ? 'value' : 'negative-val'}" style="font-size:18px; margin-top:4px;">
+                            ${formatPercent(selectedYTM)}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <br>
-<div class="winner-box">
+            <h2>جزئیات تحلیل</h2>
 
-    <div class="winner-icon">
-        ✓
-    </div>
+            <div class="row ${guaranteeWinner ? 'winning-row' : ''}">
+                <span>
+                    ارزش تضمینی در سررسید
+                    ${guaranteeWinner ? '<span class="winner-badge">برنده</span>' : ''}
+                </span>
+                <span class="value">${formatNumber(guaranteedValue)} تومان</span>
+            </div>
 
-    <div>
+            <div class="row ${exerciseWinner ? 'winning-row' : ''}">
+                <span>
+                    ارزش خالص اعمال (معادل سکه پس از کسر هزینه‌ها)
+                    ${exerciseWinner ? '<span class="winner-badge">برنده</span>' : ''}
+                </span>
+                <span class="value">${formatNumber(exerciseValue)} تومان</span>
+            </div>
 
-        <div class="winner-title">
+            <div class="row">
+                <span>دریافتی نهایی در سررسید (بهترین سناریو)</span>
+                <span class="value">${formatNumber(terminalPayoff)} تومان</span>
+            </div>
 
-            سناریوی منتخب
+            <div class="row">
+                <span>سود/زیان اسمی در سررسید (بدون تنزیل)</span>
+                <span class="${nominalMargin >= 0 ? 'value' : 'negative-val'}">
+                    ${formatNumber(nominalMargin)} تومان (${formatPercent(holdingReturnPercent)})
+                </span>
+            </div>
 
-            <span class="winner-badge">
-                ${winnerBadge}
-            </span>
+            <div class="row">
+                <span>حاشیه ایمنی نسبت به ارزش فعلی منصفانه (PV)</span>
+                <span class="${pvMargin >= 0 ? 'value' : 'negative-val'}">
+                    ${formatNumber(pvMargin)} تومان (${formatPercent(pvUpsidePercent)})
+                </span>
+            </div>
 
-        </div>
+            <hr>
 
-        <div class="winner-subtitle">
+            <div class="row">
+                <span>YTM سناریوی تضمینی</span>
+                <span>${formatPercent(guaranteedYTM)}</span>
+            </div>
 
-            ${winnerLabel}
+            <div class="row">
+                <span>اسپرد تضمینی نسبت به نرخ بدون ریسک</span>
+                <span class="${spreadGuarantee >= 0 ? 'value' : 'negative-val'}">${formatPercent(spreadGuarantee)}</span>
+            </div>
 
-        </div>
+            <div class="row">
+                <span>YTM سناریوی اعمال سکه</span>
+                <span>${formatPercent(exerciseYTM)}</span>
+            </div>
 
-    </div>
+            <div class="row">
+                <span>اسپرد اعمال نسبت به نرخ بدون ریسک</span>
+                <span class="${spreadExercise >= 0 ? 'value' : 'negative-val'}">${formatPercent(spreadExercise)}</span>
+            </div>
 
-</div>
-        <div class="${cls}">
-        نتیجه نهایی: ${status}
-        </div>
+            <div class="row">
+                <span>روزهای باقیمانده تا سررسید</span>
+                <span>${formatNumber(days)} روز</span>
+            </div>
 
-    `;
-}
+            <div class="winner-box">
+                <div class="winner-icon">✓</div>
+                <div>
+                    <div class="winner-title">
+                        سناریوی منتخب
+                        <span class="winner-badge">${winnerBadge}</span>
+                    </div>
+                    <div class="winner-subtitle">${winnerLabel}</div>
+                </div>
+            </div>
 
+            <div class="${cls}">
+                نتیجه نهایی: ${status}
+            </div>
+        `;
+    }
+
+    // فرمت خودکار سه‌رقمی برای فیلدهای مبالغ ریالی هنگام تایپ
+    function attachThousandFormatter(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener("input", function() {
+            const num = parseCleanNumber(this.value);
+            if (!isNaN(num) && this.value.trim() !== "") {
+                this.value = num.toLocaleString("en-US");
+            }
+        });
+    }
+
+    // اتصال رویدادها پس از بارگذاری کامل DOM
+    function init() {
+        document.getElementById("calcBtn").addEventListener("click", analyze);
+        document.getElementById("todayBtn").addEventListener("click", function() {
+            setToday();
+            analyze();
+        });
+
+        attachThousandFormatter("bondPrice");
+        attachThousandFormatter("coinPrice");
+        attachThousandFormatter("costs");
+
+        // اجرای محاسبه با زدن کلید Enter روی هر یک از ورودی‌ها
+        document.querySelectorAll("input").forEach(function(input) {
+            input.addEventListener("keydown", function(e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    analyze();
+                }
+            });
+        });
+
+        setToday();
+        analyze();
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
+    }
+})();
 </script>
 
 </body>
