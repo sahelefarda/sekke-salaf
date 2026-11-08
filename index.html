@@ -223,7 +223,75 @@ input:focus{
     display:inline-block;
     margin-right:8px;
 }
+.winning-row{
 
+    background:rgba(34,197,94,.10);
+
+    border:1px solid rgba(
+        34,
+        197,
+        94,
+        .35
+    );
+
+    border-radius:10px;
+
+    padding-right:10px;
+
+    box-shadow:
+        0 0 10px rgba(
+            34,
+            197,
+            94,
+            .15
+        );
+
+}
+.summary-card{
+
+    margin-bottom:20px;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    background:linear-gradient(
+        135deg,
+        rgba(251,191,36,.15),
+        rgba(34,197,94,.12)
+    );
+
+    border:1px solid rgba(
+        251,
+        191,
+        36,
+        .35
+    );
+
+}
+
+.summary-title{
+
+    color:#fbbf24;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    margin-bottom:10px;
+
+}
+
+.summary-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:12px;
+
+}    
 @keyframes tickPop{
 
     0%{
@@ -483,7 +551,35 @@ function analyze(){
     const spreadExercise =
         exerciseYTM -
         riskFreeRate;
+    const winnerLabel =
+    exerciseValue > guaranteedValue
+    ?
+    "اعمال اوراق و دریافت سکه"
+    :
+    exerciseValue < guaranteedValue
+    ?
+    "بازخرید تضمینی"
+    :
+    "هر دو برابر";
 
+const winnerBadge =
+    exerciseValue > guaranteedValue
+    ?
+    "سناریوی اعمال"
+    :
+    exerciseValue < guaranteedValue
+    ?
+    "سناریوی تضمینی"
+    :
+    "سناریوهای برابر";
+const guaranteeWinner =
+    guaranteedValue > exerciseValue;
+
+const exerciseWinner =
+    exerciseValue > guaranteedValue;
+
+const equalScenario =
+    guaranteedValue === exerciseValue;
     let source;
 
     if(
@@ -551,23 +647,55 @@ function analyze(){
 
         <h2>نتایج تحلیل</h2>
 
-        <div class="row">
-        <span>ارزش تضمینی ورقه</span>
-        <span class="value">
-        ${formatNumber(
-            guaranteedValue
-        )} تومان
-        </span>
-        </div>
+<div class="row ${guaranteeWinner ? 'winning-row' : ''}">
+<span>
 
-        <div class="row">
-        <span>ارزش اعمال ورقه</span>
-        <span class="value">
-        ${formatNumber(
-            exerciseValue
-        )} تومان
-        </span>
-        </div>
+    ارزش تضمینی ورقه
+
+    ${
+        guaranteeWinner
+        ?
+        '<span class="winner-badge">برنده</span>'
+        :
+        ''
+    }
+
+</span>
+
+<span class="value">
+
+${formatNumber(
+    guaranteedValue
+)} تومان
+
+</span>
+
+</div>        
+
+<div class="row ${exerciseWinner ? 'winning-row' : ''}">
+<span>
+
+    ارزش اعمال ورقه
+
+    ${
+        exerciseWinner
+        ?
+        '<span class="winner-badge">برنده</span>'
+        :
+        ''
+    }
+
+</span>
+
+<span class="value">
+
+${formatNumber(
+    exerciseValue
+)} تومان
+
+</span>
+
+</div>
 
         <div class="row">
         <span>مبنای ارزش‌گذاری</span>
@@ -658,7 +786,33 @@ function analyze(){
         </div>
 
         <br>
+<div class="winner-box">
 
+    <div class="winner-icon">
+        ✓
+    </div>
+
+    <div>
+
+        <div class="winner-title">
+
+            سناریوی منتخب
+
+            <span class="winner-badge">
+                ${winnerBadge}
+            </span>
+
+        </div>
+
+        <div class="winner-subtitle">
+
+            ${winnerLabel}
+
+        </div>
+
+    </div>
+
+</div>
         <div class="${cls}">
         نتیجه نهایی: ${status}
         </div>
