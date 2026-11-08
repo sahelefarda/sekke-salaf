@@ -129,38 +129,7 @@ Max(
 
 گران ❌
 درصد ارزندگی ≤ -3%
-
-اجرا روی GitHub Pages
-
-فایل‌های پروژه را در یک Repository قرار دهید.
-
-ساختار پیشنهادی:
-
-/
-├─ index.html
-├─ README.md
-
-
-سپس:
-
-Settings
-→ Pages
-→ Deploy from Branch
-→ main
-→ /(root)
-→ Save
-
-
-بعد از چند دقیقه سایت در آدرس زیر در دسترس خواهد بود:
-
-https://USERNAME.github.io/REPOSITORY/
-
-فناوری‌های استفاده‌شده
-HTML5
-CSS3
-Vanilla JavaScript
-
-هیچ وابستگی خارجی یا کتابخانه‌ای استفاده نشده است.
+.
 
 سلب مسئولیت
 
