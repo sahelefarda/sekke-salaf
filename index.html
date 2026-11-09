@@ -162,7 +162,7 @@
                         <div id="timeline-progress" class="bg-gradient-to-l from-amber-500 to-cyan-500 h-full transition-all duration-300" style="width: 65.5%"></div>
                     </div>
                     <div class="flex justify-between text-[10px] text-gray-400 mt-1.5">
-                        <span>قیمت عرضه اولیه: <strong id="bar-p0" class="text-gray-200 num-ltr">240,000,000</strong></span>
+                        <span>قیمت عرضه اولیه: <strong id="bar-p0" class="text-gray-200 num-ltr">235,700,000</strong></span>
                         <span>کف تعهد دولت (K): <strong id="bar-k" class="text-amber-400 num-ltr">256,800,000</strong></span>
                     </div>
                 </div>
@@ -277,13 +277,13 @@
                         <div>
                             <div class="flex justify-between text-xs mb-1">
                                 <label class="text-gray-300">قیمت عرضه اولیه ۱۰۰۰ ورقه (<span class="font-mono text-amber-300">P₀</span>):</label>
-                                <span id="lbl-p0" class="font-bold text-white num-ltr">240,000,000 تومان</span>
+                                <span id="lbl-p0" class="font-bold text-white num-ltr">235,700,000 تومان</span>
                             </div>
-                            <input type="range" id="rng-p0" min="180000000" max="320000000" step="500000" value="240000000" oninput="syncInput('p0', this.value)" class="w-full h-1.5 bg-gray-800 rounded-lg cursor-pointer">
+                            <input type="range" id="rng-p0" min="180000000" max="320000000" step="500000" value="235700000" oninput="syncInput('p0', this.value)" class="w-full h-1.5 bg-gray-800 rounded-lg cursor-pointer">
                             <div class="grid grid-cols-2 gap-2.5 mt-2">
                                 <div>
                                     <span class="text-[10px] text-gray-400 block mb-0.5">قیمت عرضه اولیه کل (<span class="font-mono">P₀</span>)</span>
-                                    <input type="number" id="inp-p0" value="240000000" step="500000" oninput="syncInput('p0', this.value)" class="w-full bg-gray-900 border border-gray-700 rounded px-2.5 py-1.5 text-xs text-white num-ltr font-bold">
+                                    <input type="number" id="inp-p0" value="235700000" step="500000" oninput="syncInput('p0', this.value)" class="w-full bg-gray-900 border border-gray-700 rounded px-2.5 py-1.5 text-xs text-white num-ltr font-bold">
                                 </div>
                                 <div>
                                     <span class="text-[10px] text-gray-400 block mb-0.5">سود تضمینی کل دوره ۹۰ روزه (%)</span>
@@ -462,7 +462,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-2 pt-1 text-[11px]">
                         <div class="bg-gray-950 p-2.5 rounded-lg border border-gray-800">
                             <span class="text-gray-400 block">۱. عرضه اولیه ۵۹ روز پیش (<span class="num-ltr">P₀</span>):</span>
-                            <strong id="f-p0" class="text-gray-200 text-sm num-ltr">240,000,000 ت</strong>
+                            <strong id="f-p0" class="text-gray-200 text-sm num-ltr">235,700,000 ت</strong>
                         </div>
                         <div class="bg-gray-950 p-2.5 rounded-lg border border-amber-500/30">
                             <span class="text-amber-300 block">۲. کف تعهد دولت (<span class="num-ltr">K = 1.07 P₀</span>):</span>
@@ -788,13 +788,13 @@ if __name__ == "__main__":
 
             if (name === 'below_k_arb') {
                 // P0 = 240M -> K = 256.8M. Asakeh Ask = 249.2M (< K). Guaranteed floor return > Akhz!
-                syncInput('p0', 240000000);
+                syncInput('p0', 235700000);
                 syncInput('spot', 256000000);
                 syncInput('asakeh', 248900000);
                 showToast('سناریوی ۱: خرید عسکه زیر کف تضمینی K (سود قطعی بدون ریسک بالاتر از اخزا + اختیار رشد سکه)');
             } else if (name === 'atm_replacement') {
                 // P0 = 240M -> K = 256.8M. Spot = 258M, Asakeh = 257M.
-                syncInput('p0', 240000000);
+                syncInput('p0', 235700000);
                 syncInput('spot', 258500000);
                 syncInput('asakeh', 257200000);
                 showToast('سناریوی ۲: قیمت سکه نزدیک کف K؛ جایگزینی سکه نقدی با عسکه و دریافت بیمه تقریباً رایگان');
@@ -830,7 +830,7 @@ if __name__ == "__main__":
         }
 
         function recalculateAll() {
-            const P0 = parseFloat(document.getElementById('inp-p0').value) || 240000000;
+            const P0 = parseFloat(document.getElementById('inp-p0').value) || 235700000;
             const guarPct = (parseFloat(document.getElementById('inp-guar-pct').value) || 7.0) / 100.0;
             const elapsedDays = Math.max(0, parseFloat(document.getElementById('inp-elapsed-days').value) || 59);
             const remDays = Math.max(1, parseFloat(document.getElementById('inp-rem-days').value) || 31);
